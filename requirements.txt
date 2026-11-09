@@ -1,0 +1,21 @@
+# Core — required for the pipeline to run
+pydantic>=2.0
+PyYAML>=6.0
+
+# Metadata generation (titles/descriptions/hashtags)
+anthropic>=2.0
+
+# Publishing
+google-api-python-client>=2.0
+google-auth>=2.0
+google-auth-oauthlib>=1.0
+requests>=2.30
+
+# Speech-to-text (optional at runtime; detection degrades gracefully without it)
+# faster-whisper>=1.0
+
+# Dev / test
+pytest>=8.0
+
+# NOTE: ffmpeg and ffprobe are external binaries and must be installed separately
+# (e.g. `brew install ffmpeg` on the Mac). They are NOT pip packages.

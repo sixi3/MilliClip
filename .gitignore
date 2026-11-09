@@ -1,0 +1,47 @@
+# Secrets & credentials — NEVER commit these
+.env
+*.env
+config/config.yaml
+config/*.local.yaml
+secrets/
+*.token.json
+*_token.json
+client_secret*.json
+oauth2*.json
+credentials*.json
+
+# Media & working data
+samples/*
+!samples/.gitkeep
+recordings/
+clips/
+renders/
+work/
+*.mp4
+*.mkv
+*.mov
+*.wav
+*.ts
+
+# Job/state databases
+*.db
+*.sqlite
+*.sqlite3
+data/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/

@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "milliclip"
+version = "0.1.0"
+description = "Automated gameplay clipping and publishing pipeline"
+requires-python = ">=3.10"
+dynamic = ["dependencies"]
+
+[tool.setuptools]
+packages = ["milliclip", "milliclip.capture", "milliclip.detect", "milliclip.select", "milliclip.edit", "milliclip.publish", "milliclip.jobs", "milliclip.health"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

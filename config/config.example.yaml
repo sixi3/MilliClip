@@ -1,0 +1,87 @@
+# MilliClip configuration — copy to config/config.yaml and edit.
+# Secrets are NOT stored here. They come from environment variables / token files.
+
+paths:
+  recordings: recordings      # segment ring buffer
+  renders: renders            # finished vertical clips
+  work: work                  # scratch
+  db: data/milliclip.db       # job store
+
+capture:
+  source: card                # card | remote_play | broadcast
+  segment_seconds: 60         # length of each recorded segment
+  resolution: "1920x1080"
+  fps: 60
+  # card:
+  device: ""                  # ffmpeg avfoundation device index/name on macOS; set at Mac
+  # remote_play / broadcast specific options can be added per source
+
+storage:
+  max_recordings_gb: 50       # ring buffer cap; oldest evicted first
+  keep_renders: 50            # how many finished clips to retain
+  min_free_gb: 10             # hard floor; capture pauses + alert below this
+
+detect:
+  # weights for the ranker (0..1 contribution before normalization)
+  weight_loudness: 1.0
+  weight_scene: 0.6
+  weight_speech: 0.8
+  loudness_percentile: 90     # a moment is "loud" above this percentile of the segment
+  min_highlight_seconds: 4
+  max_highlight_seconds: 45
+  music_penalty: 0.3          # reduce score when sustained music is detected
+  speech:
+    enabled: false            # requires faster-whisper installed
+    model: "base"
+    language: "en"
+
+select:
+  lead_in_seconds: 2.0        # context before the peak
+  tail_seconds: 1.5           # breathing room after
+  min_gap_seconds: 30         # minimum spacing between chosen clips
+  max_clips_per_run: 10
+  dedup_similarity: 0.85      # drop near-duplicate highlights above this similarity
+
+edit:
+  target_resolution: "1080x1920"
+  reframe: center             # center | track (track = future motion-based)
+  subtitles: true
+  subtitle_style:
+    font: "Arial"
+    fontsize: 18
+    primary_color: "&H00FFFFFF"   # ASS BGR; white
+    outline: 2
+    margin_v: 120
+  encode:
+    video_bitrate: "8M"
+    audio_bitrate: "160k"
+    preset: "medium"
+
+metadata:
+  model: "claude-opus-5-5"
+  max_title_chars: 90
+  max_hashtags: 12
+  tone: "energetic, concise, gaming"
+  # The game name is injected into the prompt for grounding; set per-run.
+  game: "GTA 6"
+
+publish:
+  enabled: false              # MASTER SWITCH — false = dry-run only
+  min_confidence: 0.55        # skip clips below this score (0..1)
+  max_consecutive_failures: 3 # circuit breaker: pause publishing after N in a row
+  youtube:
+    enabled: false
+    daily_limit: 5
+    privacy: "private"        # private until audit passes; then unlisted/public
+    category_id: "20"         # Gaming
+  instagram:
+    enabled: false
+    daily_limit: 5
+    # Instagram needs a public HTTPS URL for the video; set your host base here.
+    public_media_base_url: ""
+
+health:
+  alert:
+    method: none              # none | file | webhook
+    webhook_url_env: "MILLICLIP_ALERT_WEBHOOK"  # env var NAME, not the URL
+    file: "data/alerts.log"
