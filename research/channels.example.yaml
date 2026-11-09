@@ -1,0 +1,26 @@
+# Seed channels for competitor outlier mining. Copy to research/channels.yaml and edit.
+# Use `id` (UC...) or `handle` (@name). Entries containing PLACEHOLDER are skipped.
+# NOTHING below is verified — confirm every channel yourself before relying on results.
+settings:
+  uploads_per_channel: 100     # last N uploads per channel (~1 quota unit per 50 videos x2)
+  min_age_days: 3              # skip videos younger than this when scoring
+  shorts_max_seconds: 180      # Shorts heuristic: duration <= this (API has no Shorts flag)
+  max_quota_units: 2000        # hard budget guard for one run (free daily quota is 10,000)
+  top_n_per_channel: 5
+  output_dir: data/research    # git-ignored
+  outlier:
+    metric: views_per_day      # views_per_day (age-adjusted) | views (raw)
+    baseline_window_days: 180  # peers = same channel+class videos published in this trailing window
+    min_peers: 5
+    exclude_self: true
+    top_fraction: 0.10         # "outlier" group = top 10% by score
+
+channels:
+  - id: UC_PLACEHOLDER_REPLACE_ME_1
+    tags: {language: hinglish, niche: gta}
+    note: placeholder - replace with a real channel ID
+  - id: UC_PLACEHOLDER_REPLACE_ME_2
+    tags: {language: hindi, niche: gta}
+  - handle: "@PLACEHOLDER_gta_hinglish_channel"
+    tags: {language: hinglish, niche: gta}
+    note: unverified candidate - invented example handle

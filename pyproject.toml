@@ -10,7 +10,10 @@ requires-python = ">=3.10"
 dynamic = ["dependencies"]
 
 [tool.setuptools]
-packages = ["milliclip", "milliclip.capture", "milliclip.detect", "milliclip.select", "milliclip.edit", "milliclip.publish", "milliclip.jobs", "milliclip.health"]
+packages = ["milliclip", "milliclip.capture", "milliclip.detect", "milliclip.select", "milliclip.edit", "milliclip.publish", "milliclip.jobs", "milliclip.health", "milliclip.research"]
+
+[project.scripts]
+milliclip-research = "milliclip.research.cli:main"
 
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}
